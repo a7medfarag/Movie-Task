@@ -33,28 +33,19 @@
             <tbody>
                 <tr>
                     <td>
-                        {{movie.id}}
+                        {{category.id}}
                     </td>
                     <td>
-                        <!-- <a [routerLink] = "['/products' , movie.productId]"> -->
-                            {{movie.name}}
+                        <!-- <a [routerLink] = "['/products' , category.productId]"> -->
+                            {{category.name}}
                         <!-- </a> -->
                     </td>
+                 
                     <td>
-                        <img [src]="base_url + movie.image" [title]="movie.name" alt="">
-                       
-                    </td>                        
-                    <td>
-                        {{movie.description}}
+                        {{category.created_at |  date:'full'}}
                     </td>
                     <td>
-                        {{movie.category_id}}
-                    </td>
-                    <td>
-                        {{movie.created_at |  date:'full'}}
-                    </td>
-                    <td>
-                        {{movie.updated_at |  date:'full'}}
+                        {{category.updated_at |  date:'full'}}
                     </td>
                 </tr>
             </tbody>

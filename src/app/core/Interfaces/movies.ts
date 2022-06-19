@@ -1,11 +1,10 @@
-import { DatePipe } from "@angular/common";
 
-export interface moviesObj{
+export interface IMovie{
     id: number,
     name: string,
     image: string,
     description: string,
-    category_id: string,
-    created_at: DatePipe,
-    updated_at: DatePipe
+    category_id: number,
+    created_at: Date,
+    updated_at: Date
 }

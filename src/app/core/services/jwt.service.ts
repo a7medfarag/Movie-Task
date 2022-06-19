@@ -31,7 +31,7 @@ export class JwtService {
   }
 
   isAuthenticated(){    
-    return this.getToken ? true : false
+    return this.getToken() ? true : false
   }
 
   // isLogged() {

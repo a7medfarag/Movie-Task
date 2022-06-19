@@ -1,10 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { moviesObj } from '../Interfaces/movies';
-import { JwtService } from './jwt.service';
+import { IMovie } from '../Interfaces/movies';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +12,8 @@ export class MoviesListService {
   constructor(private _http: HttpClient) { }
 
   
-  // getMovies(): Observable<moviesObj[]>{
-  //   return this._http.get<moviesObj[]>(`${environment.base_url}/movies`).pipe(
+  // getMovies(): Observable<IMovie[]>{
+  //   return this._http.get<IMovie[]>(`${environment.base_url}/movies`).pipe(
   //     catchError(this.handleError)
   //   );
   
@@ -24,9 +22,9 @@ export class MoviesListService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     // headers: new HttpHeaders({'Authorization': `Bearer ${this.token}` })
   };
-  getMovies(): Observable<moviesObj[]>{
+  getMovies(): Observable<IMovie[]>{
     
-    return this._http.get<moviesObj[]>(`${environment.base_url}/movies`).pipe( )
+    return this._http.get<IMovie[]>(`${environment.base_url}/movies`).pipe( )
     // .pipe( )
 //   private handleError(err:HttpErrorResponse){
 //     // in a real world app, we may send the server to some remote logging infrastructure
@@ -46,24 +44,36 @@ export class MoviesListService {
 // }
 
 }
-getMovie(id: number): Observable<moviesObj[]> {
+getMovie(id: number): Observable<IMovie> {
   //return of(MOVIES.find(movie => movie.id === id));
   const url = `${environment.base_url}/movies/${id}`;
-  return this._http.get<moviesObj[]>(url)
+  return this._http.get<IMovie>(url)
 }
 
-addMovie (movie: moviesObj[]): Observable<moviesObj[]> {
-  return this._http.post<moviesObj[]>(`${environment.base_url}/movies`, movie, this.httpOptions)
+createMovie (movie: IMovie): Observable<any> {
+  const formData = new FormData();
+  formData.append('name' , movie.name)
+  formData.append('description' , movie.description)
+  formData.append('image' , movie.image)
+  formData.append('category_id' , `${movie.category_id}`)
+  console.log(movie);
+  
+  return this._http.post<any>(`${environment.base_url}/movies`, movie, this.httpOptions)
 }
 
-deleteMovie (movie: moviesObj | number): Observable<moviesObj[]> {
+deleteMovie (movie: IMovie | number): Observable<any> {
   const id = typeof movie === 'number' ? movie : movie.id;
   const url = `${environment.base_url}/movies/${id}`;
 
-  return this._http.delete<moviesObj[]>(url, this.httpOptions)
+  return this._http.delete<IMovie>(url, this.httpOptions)
 }
 
-updateMovie (movie: moviesObj[]): Observable<any> {
-  return this._http.put(`${environment.base_url}/movies`, movie, this.httpOptions)
+updateMovie (movie: IMovie): Observable<any> {
+  const formData = new FormData();
+  formData.append('name' , movie.name)
+  formData.append('description' , movie.description)
+  formData.append('image' , movie.image)
+  formData.append('category_id' , `${movie.category_id}`)
+  return this._http.put(`${environment.base_url}/movies`,formData , this.httpOptions)
 }
 }

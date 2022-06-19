@@ -16,7 +16,7 @@ export class IsLoggedGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.jwt.getToken()) {
+    if (this.jwt.isAuthenticated()) {
       this.router.navigate(['/movie-list'])
       return false;
     }

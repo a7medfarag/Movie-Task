@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="form-container">
+        <form [formGroup]="movieForm" *ngIf="movieForm" (submit)="onSubmit()">
+            <div class="form-group mb-2 ">
+                <label for="" > Name</label>
+                <input formControlName="name" type="text" class="form-control" [ngClass] = "{'is-invalid' : submitted && f?.name?.errors}">
+                <div class="" *ngIf = "submitted && f?.name?.errors" >
+                    <div class="text-danger" *ngIf="submitted && f?.name?.errors?.required">
+                        this field is required
+                    </div>
+                    <div class="text-danger" *ngIf="submitted && f?.name?.errors?.name">
+                        Please Enter Valid name
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label for=""> Description</label>
+                <textarea formControlName="description" type="text" class="form-control" [ngClass] = "{'is-invalid' : submitted && f?.description?.errors}"></textarea>
+                <div class="" *ngIf="submitted && f?.description?.errors">
+                    <div class="text-danger" *ngIf="submitted && f?.description?.errors?.required">
+                        this field is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label for=""> Image</label>
+                <input formControlName="image" type="file" class="form-control" [ngClass] = "{'is-invalid' : submitted && f?.image?.errors}">
+                <div class="" *ngIf="submitted && f?.image?.errors">
+                    <div class="text-danger" *ngIf="submitted && f?.image?.errors?.required">
+                        this field is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label for=""> Category ID</label>
+                <input formControlName="categoryId" type="number" class="form-control" [ngClass] = "{'is-invalid' : submitted && f?.categoryId?.errors}">
+                <div class="" *ngIf="submitted && f?.categoryId?.errors">
+                    <div class="text-danger" *ngIf="submitted && f?.categoryId?.errors?.required">
+                        this field is required
+                    </div>
+                </div>
+            </div>
+          
+
+            <div class="btns">
+                <button type="submit" class="btn btn-primary" value="Login"> 
+                    {{movieId? 'Update' : "Create"}}
+                </button>
+            </div>
+           
+            
+        </form>
+    </div>
+</div>
