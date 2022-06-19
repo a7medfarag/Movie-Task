@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="filterBy" name="" id="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Filtered by: {{filterBy}}</h4>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-center" *ngIf="movies.length">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Image
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Category Id
+                        </th>
+                        <th>
+                            created_at
+                        </th>
+                        <th>
+                            updated_at
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let movie of movies">
+                        <td>
+                            {{movie.id}}
+                        </td>
+                        <td>
+                            <!-- <a [routerLink] = "['/products' , movie.productId]"> -->
+                                {{movie.name}}
+                            <!-- </a> -->
+                        </td>
+                        <td>
+                            <img [src]="getImageSrc(movie)" [title]="movie.name" alt="">
+                           
+                        </td>                        
+                        <td>
+                            {{movie.description}}
+                        </td>
+                        <td>
+                            {{movie.category_id}}
+                        </td>
+                        <td>
+                            {{movie.created_at |  date:'full'}}
+                        </td>
+                        <td>
+                            {{movie.updated_at |  date:'full'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

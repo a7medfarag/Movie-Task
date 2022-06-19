@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-6 mx-auto mt-5">
+        <div class="card rounded-0">
+            <div class="card-header">
+                <h3 class="mb-0">
+                    Register
+                </h3>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="registerUserData" class="form" (submit) = "registerUser()">
+                    <div class="form-group">
+                        <label for=""> Username </label>
+                          <input formControlName="name" type="name" class="form-control" [ngClass] = "{'is-invalid' : registered && f.name.errors}"d>
+                          <div class="" *ngIf = "registered && f.name.errors" >
+                            <div class="text-danger" *ngIf="registered && f?.name?.errors.required">
+                                this field is required
+                            </div>
+                            <div class="text-danger" *ngIf="registered && f?.name?.errors.name">
+                                Please Enter Valid Name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for=""> Email </label>
+                          <input formControlName="email" type="email" class="form-control" [ngClass] = "{'is-invalid' : registered && f.email.errors}">
+                          <div class="text-danger" *ngIf = "errMessage">
+                            {{errMessage}}
+                        </div>
+                          <div class="" *ngIf = "registered && f.email.errors" >
+                            <div class="text-danger" *ngIf="registered && f?.email?.errors.required">
+                                this field is required
+                            </div>
+                            <div class="text-danger" *ngIf="registered && f?.email?.errors.email">
+                                Please Enter Valid email
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for=""> Password </label>
+                          <input formControlName="password" type="password" class="form-control" [ngClass] = "{'is-invalid' : registered && f.password.errors}">
+                          <div class="" *ngIf="registered && f?.password.errors">
+                            <div class="text-danger" *ngIf="registered && f?.password.errors.required">
+                                this field is required
+                            </div>
+                            <div class="text-danger" *ngIf="registered && f?.password.errors.minlength">
+                                Password should contain 6 characters
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" value="register" class="btn btn-primary mt-3">Register</button>
+                </form>
+                {{registerUserData.value | json}}
+            </div>
+        </div>
+    </div>
+</div>

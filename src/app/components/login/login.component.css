@@ -1,0 +1,37 @@
+
+.login-container{
+    height: 100%;
+    width: 100%;
+}
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    margin: auto;
+}
+.form-container{
+    width: 30%;
+}
+label{
+    color: #000;
+}
+.err{
+    color: red;
+}
+.btns{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.sign_up{
+    font-size: .6rem;
+    line-height: 1.1;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
