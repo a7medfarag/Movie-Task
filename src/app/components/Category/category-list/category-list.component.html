@@ -51,8 +51,10 @@
                             {{category.updated_at |  date:'full'}}
                         </td>
                         <td>
-                            <a routerLink></a>
-                        </td>
+                            <button (click)="showCategory(category.id)" class="btn btn-primary">
+                                Show Category
+                            </button>
+                          </td>
                     </tr>
                 </tbody>
             </table>

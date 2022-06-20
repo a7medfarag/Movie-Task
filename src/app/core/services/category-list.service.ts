@@ -43,10 +43,11 @@ deleteCategory (category: ICategory | number): Observable<any> {
   return this._http.delete<ICategory>(url, this.httpOptions)
 }
 
-updateCategory (category: ICategory): Observable<any> {
+updateCategory (category: ICategory , id:number): Observable<any> {
   const formData = new FormData();
   formData.append('name' , category.name)
-  formData.append('category_id' , `${category.id}`)
-  return this._http.put(`${environment.base_url}/category`,formData , this.httpOptions)
+  console.log(category);
+  
+  return this._http.put(`${environment.base_url}/category/${id}`,category , this.httpOptions)
 }
 }

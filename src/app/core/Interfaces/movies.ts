@@ -1,10 +1,10 @@
 
 export interface IMovie{
-    id: number,
+    id?: number,
     name: string,
-    image: string,
+    image: File,
     description: string,
-    category_id: number,
-    created_at: Date,
-    updated_at: Date
+    category_id: number | string ,
+    created_at?: Date,
+    updated_at?: Date
 }

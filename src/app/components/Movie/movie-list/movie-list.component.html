@@ -68,9 +68,11 @@
                         <td>
                             {{movie.updated_at |  date:'full'}}
                         </td>
-                        <td>
-                            <a routerLink></a>
-                        </td>
+                      <td>
+                        <button (click)="showMovie(movie.id)" class="btn btn-primary">
+                            Show Movie
+                        </button>
+                      </td>
                     </tr>
                 </tbody>
             </table>

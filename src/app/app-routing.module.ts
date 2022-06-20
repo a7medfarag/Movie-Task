@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'category-list' , canActivate: [AuthGuard], component: CategoryListComponent},
   {path: 'category-list/:id' , canActivate: [CategoryDetailGuard , AuthGuard] , component: CategoryDetailComponent},
   {path: 'create-category'  , canActivate: [AuthGuard] , component: CreateUpdateCategoryComponent},
-  {path: 'update-Cctegory/:id' , canActivate: [CategoryDetailGuard] , component: CreateUpdateCategoryComponent},
+  {path: 'update-category/:id' , canActivate: [CategoryDetailGuard] , component: CreateUpdateCategoryComponent},
   {path: '**' ,  component:PageNotFoundComponent}
 ];
 

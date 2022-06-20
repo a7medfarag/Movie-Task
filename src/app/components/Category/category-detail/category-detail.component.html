@@ -13,15 +13,7 @@
                     <th>
                         Name
                     </th>
-                    <th>
-                        Image
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                    <th>
-                        Category Id
-                    </th>
+                 
                     <th>
                         created_at
                     </th>
@@ -46,6 +38,10 @@
                     </td>
                     <td>
                         {{category.updated_at |  date:'full'}}
+                    </td>
+                    <td>
+                        <button (click)="delete(category)"  class="btn btn-primary">Delete</button>
+                        <button (click)="update(category.id)"  class="btn btn-primary">Update</button>
                     </td>
                 </tr>
             </tbody>

@@ -9,15 +9,9 @@ import { IMovie } from '../Interfaces/movies';
 })
 export class MoviesListService {
 
+
   constructor(private _http: HttpClient) { }
 
-  
-  // getMovies(): Observable<IMovie[]>{
-  //   return this._http.get<IMovie[]>(`${environment.base_url}/movies`).pipe(
-  //     catchError(this.handleError)
-  //   );
-  
-  // }
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     // headers: new HttpHeaders({'Authorization': `Bearer ${this.token}` })
@@ -45,19 +39,14 @@ export class MoviesListService {
 
 }
 getMovie(id: number): Observable<IMovie> {
-  //return of(MOVIES.find(movie => movie.id === id));
   const url = `${environment.base_url}/movies/${id}`;
+  console.log(url);
+  
   return this._http.get<IMovie>(url)
 }
 
-createMovie (movie: IMovie): Observable<any> {
-  const formData = new FormData();
-  formData.append('name' , movie.name)
-  formData.append('description' , movie.description)
-  formData.append('image' , movie.image)
-  formData.append('category_id' , `${movie.category_id}`)
-  console.log(movie);
-  
+
+createMovie (movie: any): Observable<any> {
   return this._http.post<any>(`${environment.base_url}/movies`, movie, this.httpOptions)
 }
 

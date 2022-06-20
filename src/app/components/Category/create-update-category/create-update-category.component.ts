@@ -19,12 +19,14 @@ export class CreateUpdateCategoryComponent implements OnInit {
   submitted: boolean = false;
   categoryForm: FormGroup;
 
+  public updateData:boolean = true;
   categoryId:number;
   ngOnInit(): void {
     this.categoryId = Number(this.route.snapshot.paramMap.get('id'));    
     this.pageTitle += `: ${this.categoryId}`;
     if(this.categoryId){
-      this.getcategory()
+      this.getcategory();
+      this.updateData = false;
     }
     else{
       this.buildForm()
@@ -59,11 +61,16 @@ export class CreateUpdateCategoryComponent implements OnInit {
   }
 
   update(){
-    this._categoryListService.updateCategory(this.categoryForm.value).subscribe(result=>console.log(result)
-    )
+    console.log(this.categoryForm.value.name);
+    
+    this._categoryListService.updateCategory(this.categoryForm.value.name.toString() , this.categoryId).subscribe(result=>console.log(result))
   }
   create(){
-    this._categoryListService.createCategory(this.categoryForm.value).subscribe(result=>console.log(result))
+    this._categoryListService.createCategory(this.categoryForm.value).subscribe(result=> {
+      if(result.status == 'success'){
+        this.router.navigate(['category-list'])
+      }
+    })
   }
 
 }

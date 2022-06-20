@@ -15,7 +15,7 @@
             </div>
          
           
-            <div class="form-group mb-2">
+            <div class="form-group mb-2" *ngIf="updateData">
                 <label for=""> Category ID</label>
                 <input formControlName="categoryId" type="number" class="form-control" [ngClass] = "{'is-invalid' : submitted && f?.categoryId?.errors}">
                 <div class="" *ngIf="submitted && f?.categoryId?.errors">

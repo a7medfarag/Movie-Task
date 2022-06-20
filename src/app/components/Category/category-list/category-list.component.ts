@@ -54,9 +54,9 @@ export class CategoryListComponent implements OnInit {
     return imgSrc
   }
 
-  delete(category: number): void {
-    this.categories = this.categories.filter(m => m !== m[category]);
-    this._categoryListService.deleteCategory(category).subscribe();
+  showCategory(id:number){
+    const routerUrl = `category-list/${id}`
+    this._router.navigate([routerUrl])    
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();

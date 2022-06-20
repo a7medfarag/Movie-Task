@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IMovie } from 'src/app/core/Interfaces/movies';
 import { JwtService } from 'src/app/core/services/jwt.service';
@@ -13,9 +13,9 @@ import { MoviesListService } from 'src/app/core/services/movies-list.service';
 export class MovieListComponent implements OnInit  {
   pageTitle = "Movies List";
   sub!:Subscription;
-
+ 
   private base_url = 'https://test-api.storexweb.com/'
-  constructor(private _moviesListService:MoviesListService , private jwt:JwtService , private _router:Router) { }
+  constructor(private route:ActivatedRoute, private _moviesListService:MoviesListService , private jwt:JwtService , private _router:Router) { }
 
    listSearch: string = '';
 
@@ -54,10 +54,11 @@ export class MovieListComponent implements OnInit  {
     return imgSrc
   }
 
-  delete(movie: number): void {
-    this.movies = this.movies.filter(m => m !== m[movie]);
-    this._moviesListService.deleteMovie(movie).subscribe();
+  showMovie(id:number){
+    const routerUrl = `movie-list/${id}`
+    this._router.navigate([routerUrl])    
   }
+ 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
