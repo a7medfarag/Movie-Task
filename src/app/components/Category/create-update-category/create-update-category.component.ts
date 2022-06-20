@@ -4,6 +4,8 @@ import { ICategory } from 'src/app/core/Interfaces/category';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryListService } from 'src/app/core/services/category-list.service';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-create-update-category',
   templateUrl: './create-update-category.component.html',
@@ -15,12 +17,13 @@ export class CreateUpdateCategoryComponent implements OnInit {
   base_url : "https://test-api.storexweb.com/"
   pageTitle:string = 'Category Title';
   category: ICategory = {} as ICategory;
-  constructor(private fb:FormBuilder, private route: ActivatedRoute , private _categoryListService:CategoryListService ,private router: Router) { }
+  constructor(private toatsr: ToastrService, private fb:FormBuilder, private route: ActivatedRoute , private _categoryListService:CategoryListService ,private router: Router) { }
   submitted: boolean = false;
   categoryForm: FormGroup;
 
   public updateData:boolean = true;
   categoryId:number;
+
   ngOnInit(): void {
     this.categoryId = Number(this.route.snapshot.paramMap.get('id'));    
     this.pageTitle += `: ${this.categoryId}`;
@@ -68,6 +71,8 @@ export class CreateUpdateCategoryComponent implements OnInit {
   create(){
     this._categoryListService.createCategory(this.categoryForm.value).subscribe(result=> {
       if(result.status == 'success'){
+        console.log(result.status);
+        this.toatsr.success('Category Created Successfully' , 'Created Successfully' , {timeOut: 3000})
         this.router.navigate(['category-list'])
       }
     })

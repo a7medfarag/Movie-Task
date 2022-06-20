@@ -1,3 +1,5 @@
+   
+<app-logout></app-logout>
 <div class="card">
     <div class="card-header">
         {{pageTitle}}
@@ -71,6 +73,11 @@
                       <td>
                         <button (click)="showMovie(movie.id)" class="btn btn-primary">
                             Show Movie
+                        </button>
+                      </td>
+                      <td>
+                        <button (click)="showCategory(movie.category_id)" class="btn btn-primary">
+                            Show Category
                         </button>
                       </td>
                     </tr>

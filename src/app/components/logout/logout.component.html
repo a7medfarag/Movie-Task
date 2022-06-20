@@ -1,0 +1,19 @@
+<div class="row" [ngClass]="showBtn == true ? 'd-none' : 'd-flex'">
+  <div class="btn_cont">
+    <div class="show_Movies me-3 mt-3">
+      <button (click)="showMovies()" class="btn btn-primary">
+        Show movies
+      </button>
+    </div>
+    <div class="show_categories me-3 mt-3">
+      <button (click)="showCategories()" class="btn btn-primary">
+        Show categories
+      </button>
+    </div>
+    <div class="logout_btn me-3 mt-3">
+      <button (click)="logout()" class="btn btn-primary">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-top-right toast-container"></div>

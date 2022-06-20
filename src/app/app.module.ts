@@ -19,6 +19,7 @@ import { CreateUpdateCategoryComponent } from './components/Category/create-upda
 import { CategoryDetailComponent } from './components/Category/category-detail/category-detail.component';
 import { CategoryListComponent } from './components/Category/category-list/category-list.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
  
 @NgModule({
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     CreateUpdateCategoryComponent,
     CategoryDetailComponent,
     CategoryListComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

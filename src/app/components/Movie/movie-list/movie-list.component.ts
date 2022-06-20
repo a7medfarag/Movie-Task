@@ -58,7 +58,11 @@ export class MovieListComponent implements OnInit  {
     const routerUrl = `movie-list/${id}`
     this._router.navigate([routerUrl])    
   }
- 
+
+  showCategory(id:number){
+    const routerUrl = `category-list/${id}`
+    this._router.navigate([routerUrl])
+  }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

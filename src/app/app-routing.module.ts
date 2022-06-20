@@ -13,6 +13,7 @@ import { CategoryDetailGuard } from './core/guards/category-detail.guard';
 import { CategoryDetailComponent } from './components/Category/category-detail/category-detail.component';
 import { CreateUpdateCategoryComponent } from './components/Category/create-update-category/create-update-category.component';
 import { CategoryListComponent } from './components/Category/category-list/category-list.component';
+import { ToastrModule } from 'ngx-toastr';
 
 const routes: Routes = [
   { path: "", redirectTo: 'login', pathMatch:'full'},
@@ -30,7 +31,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), ToastrModule.forRoot({
+    timeOut: 10000,
+    positionClass: 'toast-bottom-right',
+    preventDuplicates: true,
+  }),],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
