@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ICategory } from 'src/app/core/Interfaces/category';
 import { CategoryListService } from 'src/app/core/services/category-list.service';
@@ -13,9 +14,9 @@ import { JwtService } from 'src/app/core/services/jwt.service';
 export class CategoryListComponent implements OnInit {
   pageTitle = "Categories List";
   sub!:Subscription;
-
+  public deleted: boolean = true;
   private base_url = 'https://test-api.storexweb.com/'
-  constructor(private _categoryListService:CategoryListService , private jwt:JwtService , private _router:Router) { }
+  constructor( private toastr:ToastrService ,private _categoryListService:CategoryListService , private router: Router, private jwt:JwtService , private _router:Router) { }
 
    listSearch: string = '';
 
@@ -30,7 +31,6 @@ export class CategoryListComponent implements OnInit {
     }
     set searchBy(value: string){
       this.listSearch = value;
-      console.log('Sitter Value ' + this.listSearch);
     }
 
   ngOnInit(): void {
@@ -57,6 +57,21 @@ export class CategoryListComponent implements OnInit {
   showCategory(id:number){
     const routerUrl = `category-list/${id}`
     this._router.navigate([routerUrl])    
+  }
+  // to delete the specified category
+  delete(category: ICategory , index:number): void {
+    this._categoryListService.deleteCategory(category).subscribe(
+      res=>{
+        this.categories.splice(index , 1)
+        this.toastr.success('Category Deleted Successfully' , 'Category Deleted')
+      }
+    );
+    this.deleted = false;
+  }
+  // to get the specified category id to navigate to show it to update it
+  update(id:number){
+    const routerUrl = `update-category/${id}`
+    this.router.navigate([routerUrl])    
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();

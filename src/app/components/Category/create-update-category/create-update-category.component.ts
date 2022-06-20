@@ -36,21 +36,17 @@ export class CreateUpdateCategoryComponent implements OnInit {
     }
     
   }
+  // to get the specified category
   getcategory(){
     this._categoryListService.getCategory(this.categoryId).subscribe(result => {
-      this.category = result['message']
-      // console.log(this.base_url);
-      
+      this.category = result['message']      
       this.buildForm()
-      console.log(this.category);
     });
   }
 
   onSubmit(){
     this.submitted =true;
-    this.categoryId ? this.update() : this.create();
-    console.log(this.categoryForm.value);
-   
+    this.categoryId ? this.update() : this.create();   
   }
 
   get f (){
@@ -62,20 +58,33 @@ export class CreateUpdateCategoryComponent implements OnInit {
       'categoryId': [this.category?.id || null, [Validators.required , Validators.min(0)]]
     })
   }
-
-  update(){
-    console.log(this.categoryForm.value.name);
-    
-    this._categoryListService.updateCategory(this.categoryForm.value.name.toString() , this.categoryId).subscribe(result=>console.log(result))
-  }
-  create(){
-    this._categoryListService.createCategory(this.categoryForm.value).subscribe(result=> {
-      if(result.status == 'success'){
-        console.log(result.status);
-        this.toatsr.success('Category Created Successfully' , 'Created Successfully' , {timeOut: 3000})
-        this.router.navigate(['category-list'])
+ 
+  // update the specified category
+  update(){    
+    this._categoryListService.updateCategory(this.categoryForm.value.name.toString() , this.categoryId).subscribe(
+      {
+        next: res =>{
+          this.toatsr.success('Category Updated Successfully' , 'Created Successfully'),
+          this.router.navigate(['/category-list'])
+        } , 
+        error: err=>{
+          this.toatsr.error(err.message , 'Error Message')
+        }
       }
-    })
+    )
+  }
+  // create the category
+  create(){
+    this._categoryListService.createCategory(this.categoryForm.value).subscribe(
+      {
+        next: res =>{
+          this.toatsr.success('Category Created Successfully' , 'Created Successfully'),
+          this.router.navigate(['/category-list'])
+        } , 
+        error: err=>{
+          this.toatsr.error(err.message , 'Error Message')
+        }
+      })
   }
 
 }

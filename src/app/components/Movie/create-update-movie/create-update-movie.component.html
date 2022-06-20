@@ -24,8 +24,8 @@
                 </div>
             </div>
             <div class="form-group mb-2">
-                <label for=""> Image</label>
-                <input formControlName="image" (change)="onSelectedFile($event.target.files)" type="file" class="form-control" [ngClass] = "{'is-invalid' : submitted && f?.image?.errors}">
+                <label> Image</label>
+                <input (change)="onSelectedFile($event)" type="file" class="form-control">
                 <div class="" *ngIf="submitted && f?.image?.errors">
                     <div class="text-danger" *ngIf="submitted && f?.image?.errors?.required">
                         this field is required

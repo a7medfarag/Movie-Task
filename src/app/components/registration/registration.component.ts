@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { JwtService } from 'src/app/core/services/jwt.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class RegistrationComponent implements OnInit {
   get email(){
     return this.registerUserData.get('email');
   }
-  constructor(private fb: FormBuilder, private jwt: JwtService, private _router: Router) { }
+  constructor(private fb: FormBuilder, private jwt: JwtService, private _router: Router , private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.buildForm()
@@ -35,17 +36,17 @@ export class RegistrationComponent implements OnInit {
           (res:any) => {
             if(res.status == 'failed'){
               this.errMessage = res.message.email[0]
-              console.log(res.message.email[0]);
+              this.toastr.error(res.message.email[0] , 'Your Email Registered Before')    
             }
             else{
-              // this.jwt.se
+              this.toastr.success('You Registered Successfully' , 'You will go to login')
               this._router.navigate(['/login']);
             }
             
           },
-          error=> (error: any) => {
-            console.log(error.status);
+          error=>{
             
+            this.toastr.error(error.message , 'Please Follow The Registration in criteria')            
               this.registered = false;
           }
       );

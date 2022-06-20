@@ -34,10 +34,6 @@ export class JwtService {
     return this.getToken() ? true : false
   }
 
-  // isLogged() {
-  //   return this.getToken ? true : false
-  // }
-
   logout(){
     localStorage.removeItem(USER_TOKEN);
     this.router.navigate(['/login']);

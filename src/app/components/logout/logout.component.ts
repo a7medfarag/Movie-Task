@@ -28,7 +28,14 @@ export class LogoutComponent implements OnInit {
     const routerUrl = 'movie-list'
     this._router.navigate([routerUrl])
   }
- 
+  createMovie(){
+    const routerUrl = 'create-movie'
+    this._router.navigate([routerUrl])
+  }
+  createCategory(){
+    const routerUrl = 'create-category'
+    this._router.navigate([routerUrl])
+  }
   logout(){
     this.jwt.logout();
     }

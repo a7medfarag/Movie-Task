@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { IMovie } from 'src/app/core/Interfaces/movies';
 import { JwtService } from 'src/app/core/services/jwt.service';
@@ -15,7 +16,7 @@ export class MovieListComponent implements OnInit  {
   sub!:Subscription;
  
   private base_url = 'https://test-api.storexweb.com/'
-  constructor(private route:ActivatedRoute, private _moviesListService:MoviesListService , private jwt:JwtService , private _router:Router) { }
+  constructor( private toastr: ToastrService ,private _moviesListService:MoviesListService , private jwt:JwtService , private _router:Router) { }
 
    listSearch: string = '';
 
@@ -49,6 +50,7 @@ export class MovieListComponent implements OnInit  {
     }
   
   }
+  // to show the image with the right src in the DOM
   getImageSrc(movie:IMovie[]):string{
     let imgSrc = this.base_url + movie['image']
     return imgSrc
@@ -63,6 +65,19 @@ export class MovieListComponent implements OnInit  {
     const routerUrl = `category-list/${id}`
     this._router.navigate([routerUrl])
   }
+  delete(movies: IMovie , index:number): void {
+    this._moviesListService.deleteMovie(movies).subscribe(
+      res=>{
+        this.movies.splice(index , 1)
+        this.toastr.success('Movie Deleted Successfully' , 'Movie Deleted')
+      }
+    );
+  }
+  update(id:number){
+    const routerUrl = `update-movie/${id}`
+    this._router.navigate([routerUrl])    
+  }
+  
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

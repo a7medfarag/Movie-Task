@@ -21,7 +21,7 @@ import { CategoryListComponent } from './components/Category/category-list/categ
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LogoutComponent } from './components/logout/logout.component';
 
- 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +45,13 @@ import { LogoutComponent } from './components/logout/logout.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot(
+      {
+        timeOut: 3000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+      }
+    ),
   ],
   providers: [httpInterceptorsProviders],
   bootstrap: [AppComponent]

@@ -16,25 +16,20 @@ export class MovieDetailComponent implements OnInit {
   base_url = 'https://test-api.storexweb.com/'
 
   constructor(private route: ActivatedRoute , private _moviesListService:MoviesListService ,private router: Router) { }
-  public deleted:boolean = true;
   ngOnInit(): void {
+    // ot get the id of the clicked movie 
     const id = Number(this.route.snapshot.paramMap.get('id'));    
     console.log(typeof id);
     
     this.pageTitle += `: ${id}`;
+    // to show the clicked movie
     this._moviesListService.getMovie(id).subscribe(result => {
       this.movie = result['message']
       console.log(this.movie);
       
-      // this.movies.filter(items => items.id == id)
     });
   }
-  delete(movie: IMovie): void {
-    // this.movie = this.movie.filter(m => m !== m[movie]);
-    this._moviesListService.deleteMovie(movie).subscribe();
-    this.deleted = false;
-    this.router.navigate(['movie-list'])
-  } 
+
 
 
 }

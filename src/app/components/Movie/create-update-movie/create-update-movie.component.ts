@@ -6,6 +6,7 @@ import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-update-movie',
   templateUrl: './create-update-movie.component.html',
@@ -16,85 +17,113 @@ export class CreateUpdateMovieComponent implements OnInit {
   base_url: "https://test-api.storexweb.com/"
   pageTitle: string = 'Movie Title';
   movie: IMovie = {} as IMovie;
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _moviesListService: MoviesListService, private _http: HttpClient) { }
+  constructor(private fb: FormBuilder,private toatsr:ToastrService , private route: ActivatedRoute, private _moviesListService: MoviesListService, private _http: HttpClient , private _router:Router) { }
   submitted: boolean = false;
   movieForm: FormGroup;
-
+  
   movieId: number;
   ngOnInit(): void {
+    // to get the movie id form the url
     this.movieId = Number(this.route.snapshot.paramMap.get('id'));
     this.pageTitle += `: ${this.movieId}`;
     if (this.movieId) {
       this.getMovie()
     }
-    else {
+    
       this.buildForm()
-    }
+    
 
   }
+  // show the movie with the specified id
   getMovie() {
-    this._moviesListService.getMovie(this.movieId).subscribe(result => {
-      this.movie = result['message']
-      // console.log(this.base_url);
-
-      this.buildForm()
-      console.log(this.movie);
-    });
+    this._moviesListService.getMovie(this.movieId).subscribe(
+      result => {
+        this.movie = result['message']
+        this.buildForm()
+      },
+      err=>{
+        this._router.navigate(['/movie-list'])
+      }
+    );
   }
 
   onSubmit() {
     this.submitted = true;
-    this.movieId ? this.update() : this.onLoad();
-    console.log(this.movieForm.value);
-
+    this.movieId ? this.update() : this.create();
   }
 
   get f() {
     return this.movieForm.controls;
   }
+  
+  // Update the specified movie
+  update() {
+    const formData:FormData = new FormData();
+    
+ 
+    this._moviesListService.updateMovie(formData , this.movie.id).subscribe(
+      {
+        next: res =>{
+          this.toatsr.success('Movie Created Successfully' , 'Created Successfully'),
+          this._router.navigate(['/movie-list'])
+        } , 
+        error: err=>{
+          this.toatsr.error(err.message , 'Error Message')
+        }
+      }
+    )
+  }
+  // to get the image as a file
+  onSelectedFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.movieForm.patchValue({
+      image: file
+    });
+    this.movieForm.get('image').updateValueAndValidity();  
+  }
+  // create the movie
+  create() {
+    const formData:FormData = new FormData();
+    
+    if(
+      !this.movieForm.get('name').value || 
+      !this.movieForm.get('description').value ||
+      !this.movieForm.get('category_id').value || 
+      !this.movieForm.get('image').value
+    ){
+
+      throw new Error("The parameter 'file' cannot be null.");
+    }
+    else {
+      formData.append('name', this.movieForm.get('name').value)
+      formData.append('description', this.movieForm.get('description').value)
+      formData.append('image', this.movieForm.get('image').value)
+      formData.append('category_id', this.movieForm.get('category_id').value)
+    }
+
+
+    this._http.post(`${environment.base_url}/movies`, formData).subscribe({
+      next: (res)=>{
+        this.toatsr.success('Movie Created Successfully' , 'Created Successfully' , {timeOut: 3000}),
+        this._router.navigate(['/movie-list'])
+      },
+      error: (err)=>{
+        this.toatsr.error(err.message , 'Error Message')
+      }
+      
+    });
+    
+  }
+
   buildForm() {
     this.movieForm = this.fb.group({
-      'name': [this.movie?.name || null, [Validators.required, Validators.minLength(4)]],
       'description': [this.movie?.description || null, [Validators.required]],
-      'image': [null, [Validators.required]],
+      'name': [this.movie?.name || null, [Validators.required, Validators.minLength(4)]],
+      'image': [ null || null, [Validators.required]],
       'category_id': [this.movie?.category_id || null, [Validators.required, Validators.min(0)]]
     })
+
+    
   }
 
-
-  update() {
-    this._moviesListService.updateMovie(this.movieForm.value).subscribe(result => console.log(result))
-  }
-  
-  onSelectedFile(files:FileList) {
-    // this.movieForm['controls']['image'].setValue(event.target.files[0]);
-    this.imageFile = files.item(0)
-  }
-  onLoad() {
-    const formData = new FormData();
-    formData.append('name', this.movieForm['name'])
-    formData.append('description', this.movieForm['description'])
-    formData.append('image', this.imageFile, this.imageFile.name)
-    formData.append('category_id', `${this.movieForm['category_id']}`)
-  
-    console.log(formData);
-    this._http.post(`${environment.base_url}/movies`, formData, this.httpOptions)
-  }
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    // headers: new HttpHeaders({'Authorization': `Bearer ${this.token}` })
-  };
-
-  // create(){    
-  //   let data:IMovie = {
-  //     name: this.movieForm.value.name,
-  //     description: this.movieForm.value.description,
-  //     image: this.imageFile,
-  //     category_id:this.movieForm.value.category_id
-  //   }
-
-
-
-  // }
 }

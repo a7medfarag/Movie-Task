@@ -19,7 +19,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       
       catchError(err=>{
-        // this.toastr.error(err.error.message,'error');        
+        this.toastr.error(err.error.message,'error');        
         if(err.status==401 || err.status ==403){
           this.jwt.logout();
         }

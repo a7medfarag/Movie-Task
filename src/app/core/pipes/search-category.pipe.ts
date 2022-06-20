@@ -9,9 +9,7 @@ export class SearchCategoryPipe implements PipeTransform {
   transform(categories: ICategory[], value: number): ICategory[] {
     if(!categories)return [];
       if(!value)return categories;
-      return categories.filter(function(category){   
-        console.log(typeof category.id);
-             
+      return categories.filter(function(category){                
           return category.id == value;
       });
   }
